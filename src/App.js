@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Datafrom from "./components/component/dataA";
+import BasicTable from "./components/component/table";
+import AddData from "./components/form/addData";
+import Home from "./components/home/home";
+// import Login from "./components/login/login";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        {/* <Route path="/register" element={<Register />} />
+        <Route path="/requestForm" element={<RequestForm />} />
+        <Route path="/adddata" element={<AddData />} />*/}
+        <Route path="/data-form" element={<Datafrom />} />
+        <Route path="/table-form" element={<BasicTable />} />
+        <Route path="/add-form" element={<AddData />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
