@@ -117,7 +117,7 @@ export default function PersistentDrawerLeft() {
             noWrap
             component="div"
             sx={{ flexGrow: 1 }}
-            component="a"
+            
             href="/"
           >
             Air Pollution Data Center
@@ -149,10 +149,15 @@ export default function PersistentDrawerLeft() {
             เพิ่มข้อมูลสำหรับหน่วยงาน
           </Button>
 
-          <Button color="inherit" href="/add-form">
-            เพิ่มฟิล์ด
+          <Button color="inherit" href="/creat-form">
+            creat data
+          </Button>
+         
+          <Button color="inherit" href="/update-form">
+            update data
           </Button>
 
+          
 
         </Toolbar>
       </AppBar>
