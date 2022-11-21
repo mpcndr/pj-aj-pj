@@ -332,7 +332,7 @@ const Create = ({
                     Upload ข้อมูล
                   </Typography>
                 </Grid>
-                <Grid item xs={7} alignSelf="center" textAlign={"end"}>
+                {/* <Grid item xs={7} alignSelf="center" textAlign={"end"}>
                   <Button
                     variant="contained"
                     color="warning"
@@ -346,7 +346,7 @@ const Create = ({
                   >
                     ดูข้อมูลทั้งหมด
                   </Button>
-                </Grid>
+                </Grid> */}
               </Grid>
 
               <Box

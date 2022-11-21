@@ -177,13 +177,13 @@ export default function PersistentDrawerLeft() {
                 เพิ่มข้อมูล
               </Button>
 
-              <Button
+              {/* <Button
                 sx={{ fontSize: "1.5rem", mx: 1.5 }}
                 color="inherit"
                 onClick={() => checkPage("update-form")}
               >
                 อัปเดตข้อมูล
-              </Button>
+              </Button> */}
             </Grid>
           )}
         </Toolbar>
