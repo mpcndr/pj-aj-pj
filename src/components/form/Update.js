@@ -8,11 +8,20 @@ const Update = () => {
   const [name, setAgencyname] = useState("");
   const [filename, setFilename] = useState("");
   const [dataname, setDataname] = useState("");
-  const [province, setProvince,] = useState("");
-  const [description, setDescription,] = useState("");
-  const [datagroup, setDatagroup,] = useState("");
-  const [matadata, setMetadata,] = useState("");
+  const [province, setProvince] = useState("");
+  const [description, setDescription] = useState("");
+  const [datagroup, setDatagroup] = useState("");
+  const [matadata, setMetadata] = useState("");
 
+  useEffect(() => {
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
+    if (jwt) {
+      return;
+    } else {
+      alert("กรุณาเข้าสู่ระบบก่อน");
+      window.location.href = "/";
+    }
+  }, []);
 
   const navigate = useNavigate();
 
@@ -24,15 +33,13 @@ const Update = () => {
     setDescription(localStorage.getItem("description"));
     setDatagroup(localStorage.getItem("datagroup"));
     setMetadata(localStorage.getItem("matadata"));
-   
-    
   }, []);
 
   const handleUpdate = (e) => {
     e.preventDefault();
     console.log("Id...", id);
     axios
-    // mockAPI
+      // mockAPI
       .put(`https://62a59821b9b74f766a3c09a4.mockapi.io/crud-youtube/${id}`, {
         name: name,
         filename: filename,
@@ -41,7 +48,6 @@ const Update = () => {
         description: description,
         datagroup: datagroup,
         matadata: matadata,
-
       })
       .then(() => {
         navigate("/read");
@@ -121,7 +127,6 @@ const Update = () => {
             onChange={(e) => setMetadata(e.target.value)}
           />
         </div>
-
 
         <button
           type="submit"

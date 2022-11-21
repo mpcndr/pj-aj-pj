@@ -21,6 +21,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import Button from "@mui/material/Button";
 import Login from "../login/login";
 import Register from "../register/register";
+import { Grid, Link } from "@mui/material";
+import { useNavigate } from "react-location";
 
 const drawerWidth = 240;
 
@@ -75,6 +77,16 @@ export default function PersistentDrawerLeft() {
   const [openModal, setOpenModal] = React.useState(false);
   const [openModalRegis, setOpenModalRegis] = React.useState(false);
   const jwt = JSON.parse(localStorage.getItem("jwt"));
+  // const navigate = useNavigate();
+
+  function checkPage(path) {
+    if (jwt) {
+      window.location.href = path;
+    } else {
+      // alert("กรุณา login ก่อน");
+      handleOpenModal();
+    }
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -98,67 +110,82 @@ export default function PersistentDrawerLeft() {
     setOpenModalRegis(false);
   };
 
+  const handleClick = () => {
+    console.log("เข้า");
+    window.location.href = "/";
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <CssBaseline />
       <AppBar position="static" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
+          <Grid container justifyContent={"start"}>
+            <Button onClick={() => handleClick()}>
+              <Typography fontSize={"2.7rem"} color="#FFF">
+                Air Pollution Data Center
+              </Typography>
+            </Button>
+          </Grid>
+
+          {/* <Typography
+            variant="h4"
+            fontSize={"3rem"}
             noWrap
-            component="div"
+            component="span"
             sx={{ flexGrow: 1 }}
-            
-            href="/"
+            onClick={() => {
+              navigator("/");
+            }}
           >
             Air Pollution Data Center
-          </Typography>
+          </Typography> */}
           {!jwt ? (
-            <>
-              <Button color="inherit" onClick={handleOpenModal}>
+            <Grid container justifyContent={"end"}>
+              <Button
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                color="inherit"
+                onClick={handleOpenModal}
+              >
                 เข้าสู่ระบบ
               </Button>
-              <Button color="inherit" onClick={handleOpenModalRegis}>
+              <Button
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                color="inherit"
+                onClick={handleOpenModalRegis}
+              >
                 ลงทะเบียน
               </Button>
-            </>
+            </Grid>
           ) : (
-            <>
+            <Grid container justifyContent={"end"}>
               <Button
                 color="inherit"
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
                 onClick={() => {
                   localStorage.clear("jwt");
-                  window.location.reload();
+                  checkPage("/");
                 }}
               >
                 ออกจากระบบ
               </Button>
-            </>
+              <Button
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                color="inherit"
+                onClick={() => checkPage("creat-form")}
+              >
+                เพิ่มข้อมูล
+              </Button>
+
+              <Button
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                color="inherit"
+                onClick={() => checkPage("update-form")}
+              >
+                อัปเดตข้อมูล
+              </Button>
+            </Grid>
           )}
-
-          <Button color="inherit" href="/data-form">
-            เพิ่มข้อมูลสำหรับหน่วยงาน
-          </Button>
-
-          <Button color="inherit" href="/creat-form">
-            creat data
-          </Button>
-         
-          <Button color="inherit" href="/update-form">
-            update data
-          </Button>
-
-          
-
         </Toolbar>
       </AppBar>
       <Drawer

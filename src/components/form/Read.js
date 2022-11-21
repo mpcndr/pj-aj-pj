@@ -6,6 +6,16 @@ const Read = () => {
   const [data, setData] = useState([]);
   const [tabledark, setTableDark] = useState("");
 
+  useEffect(() => {
+    const jwt = JSON.parse(localStorage.getItem("jwt"));
+    if (jwt) {
+      return;
+    } else {
+      alert("กรุณาเข้าสู่ระบบก่อน");
+      window.location.href = "/";
+    }
+  }, []);
+
   function getData() {
     axios
       .get("https://637788dc5c47776512208130.mockapi.io/crud-youtube")
@@ -22,7 +32,16 @@ const Read = () => {
       });
   }
 
-  const setToLocalStorage = (id, name, filename,dataname,province,description,datagroup,matadata) => {
+  const setToLocalStorage = (
+    id,
+    name,
+    filename,
+    dataname,
+    province,
+    description,
+    datagroup,
+    matadata
+  ) => {
     localStorage.setItem("id", id);
     localStorage.setItem("name", name);
     localStorage.setItem("filename", filename);
@@ -31,7 +50,6 @@ const Read = () => {
     localStorage.setItem("description", description);
     localStorage.setItem("datagroup", datagroup);
     localStorage.setItem("matadata", matadata);
-
   };
 
   useEffect(() => {
@@ -59,15 +77,14 @@ const Read = () => {
       <table className={`table ${tabledark}`}>
         <thead>
           <tr>
-            <th scope="col">#   </th>
-            <th scope="col">Name  </th>
-            <th scope="col">filename   </th>
-            <th scope="col">dataname   </th>
-            <th scope="col">province   </th>
-            <th scope="col">description   </th>
-            <th scope="col">datagroup   </th>
-            <th scope="col">Metagroup   </th>
-
+            <th scope="col"># </th>
+            <th scope="col">Name </th>
+            <th scope="col">filename </th>
+            <th scope="col">dataname </th>
+            <th scope="col">province </th>
+            <th scope="col">description </th>
+            <th scope="col">datagroup </th>
+            <th scope="col">Metagroup </th>
           </tr>
         </thead>
         {data.map((eachData) => {
@@ -84,7 +101,7 @@ const Read = () => {
                   <td>{eachData.datagroup}</td>
                   <td>{eachData.matadata}</td>
                   <td>
-                    <Link to="/update">
+                    <Link to="/update-form">
                       <button
                         className="btn-success"
                         onClick={() =>
@@ -96,7 +113,7 @@ const Read = () => {
                             eachData.province,
                             eachData.description,
                             eachData.datagroup,
-                            eachData.matadata,
+                            eachData.matadata
                           )
                         }
                       >

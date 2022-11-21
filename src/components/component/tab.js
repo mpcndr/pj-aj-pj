@@ -9,58 +9,97 @@ import Divider from "@mui/material/Divider";
 import InboxIcon from "@mui/icons-material/Inbox";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { Typography } from "@mui/material";
+import { connect } from "react-redux";
+import { addSelectGroup } from "../../reducers/user/action";
+import { serachAPI } from "../../services/api-helper";
+import { useState } from "react";
 
-export default function BasicList() {
-  const data = JSON.parse(localStorage.getItem("dataSetCount"));
+function BasicList({ dataSetCount, dispatch, selectSet }) {
+  let [data, setData] = useState(0);
+
+  const handleClick = (e) => {
+    setData(e);
+    dispatch(addSelectGroup(e));
+    selectSet(e);
+  };
+
+  useState(() => {
+    console.log(data);
+  }, [data]);
 
   return (
     <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <nav aria-label="main mailbox folders">
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleClick(1);
+              }}
+            >
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"การคมนาคมขนส่ง (" + data.logistic + ")"}
+                primary={"การคมนาคมขนส่ง (" + dataSetCount.logistic + ")"}
               />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleClick(2);
+              }}
+            >
               <ListItemIcon>
                 <DraftsIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"การเผาในที่โล่ง (" + data['fire-in-open-area']
-                + ")"}
+                primary={
+                  "การเผาในที่โล่ง (" + dataSetCount.fireInOpenArea + ")"
+                }
               />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary={"ภาคอุตสาหกรรม (" + data.industry + ")"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DraftsIcon />
-              </ListItemIcon>
-              <ListItemText primary={"การก่อสร้าง (" + data.construct + ")"} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton
+              onClick={() => {
+                handleClick(3);
+              }}
+            >
               <ListItemIcon>
                 <DraftsIcon />
               </ListItemIcon>
               <ListItemText
-                primary={"หมอกควันข้ามแดน (" + data.pollution + ")"}
+                primary={"ภาคอุตสาหกรรม (" + dataSetCount.industry + ")"}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                handleClick(4);
+              }}
+            >
+              <ListItemIcon>
+                <DraftsIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"การก่อสร้าง (" + dataSetCount.construct + ")"}
+              />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              onClick={() => {
+                handleClick(5);
+              }}
+            >
+              <ListItemIcon>
+                <DraftsIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"หมอกควันข้ามแดน (" + dataSetCount.pollution + ")"}
               />
             </ListItemButton>
           </ListItem>
@@ -69,3 +108,13 @@ export default function BasicList() {
     </Box>
   );
 }
+
+const mapStateToProps = (state) => ({
+  keyword: state.search.keyword,
+  meta: state.search.metaDataGroup,
+  select: state.search.selectDataSetGroup,
+  dataSetCount: state?.list?.dataSetCount,
+});
+
+const BasicListWithConnect = connect(mapStateToProps)(BasicList);
+export default BasicListWithConnect;
