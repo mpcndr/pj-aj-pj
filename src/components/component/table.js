@@ -40,6 +40,8 @@ import axios from "axios";
 import fileDownload from "js-file-download";
 import { useState } from "react";
 import { addMetaData, addSelectGroup } from "../../reducers/user/action";
+import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+import FmdBadTwoToneIcon from '@mui/icons-material/FmdBadTwoTone';
 
 const data = [
   {
@@ -273,88 +275,138 @@ function BasicTable({ metaData, dispatch, filesData, keyword, meta, select }) {
                       </Typography>
                     </Grid>
                   </Grid>
-                  <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                      <TableHead>
-                        <TableRow sx={{ backgroundColor: "#33333366" }}>
-                          <TableCell
-                            sx={{ fontSize: "1.75rem", color: "#fff" }}
-                          >
-                            ชื่อข้อมูล
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ fontSize: "1.75rem", color: "#fff" }}
-                          >
-                            รายละเอียดข้อมูล
-                          </TableCell>{" "}
-                          <TableCell
-                            align="center"
-                            sx={{ fontSize: "1.75rem", color: "#fff" }}
-                          >
-                            วันที่ที่อัปเดต
-                          </TableCell>
-                          <TableCell
-                            align="center"
-                            sx={{ fontSize: "1.75rem", color: "#fff" }}
-                          >
-                            <IconButton disabled>
-                              <InfoIcon color="#FFF"/>
-                            </IconButton>
-                          </TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {metaData.map((row, index) => (
-                          <TableRow
-                            key={row.metadataId}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
+                  {Object.values(metaData).length > 0 ? (
+                    <TableContainer component={Paper}>
+                      <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                        <TableHead>
+                          <TableRow sx={{ backgroundColor: "#33333366" }}>
                             <TableCell
-                              sx={{ fontSize: "1.5rem" }}
-                              component="th"
-                              scope="row"
+                              sx={{ fontSize: "1.75rem", color: "#fff" }}
                             >
-                              {row.dataName}
+                              ชื่อข้อมูล
                             </TableCell>
                             <TableCell
-                              sx={{ fontSize: "1.5rem" }}
                               align="center"
+                              sx={{ fontSize: "1.75rem", color: "#fff" }}
                             >
-                              {row.description}
+                              รายละเอียดข้อมูล
+                            </TableCell>{" "}
+                            <TableCell
+                              align="center"
+                              sx={{ fontSize: "1.75rem", color: "#fff" }}
+                            >
+                              วันที่ที่อัปเดต
                             </TableCell>
                             <TableCell
-                              sx={{ fontSize: "1.5rem" }}
                               align="center"
+                              sx={{ fontSize: "1.75rem", color: "#fff" }}
                             >
-                              {new Date(row.timestamp).toLocaleDateString(
-                                "th-TH",
-                                {
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                                }
-                              )}
-                            </TableCell>
-                            <TableCell
-                              sx={{ fontSize: "1.5rem" }}
-                              align="center"
-                            >
-                              <IconButton
-                                onClick={(e) => {
-                                  handleClick(e, row.metadataId);
-                                }}
-                              >
-                                <PlagiarismIcon />
+                              <IconButton disabled>
+                                <InfoIcon color="#FFF" />
                               </IconButton>
                             </TableCell>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                          {metaData.map((row, index) => (
+                            <TableRow
+                              key={row.metadataId}
+                              sx={{
+                                "&:last-child td, &:last-child th": {
+                                  border: 0,
+                                },
+                              }}
+                            >
+                              <TableCell
+                                sx={{ fontSize: "1.5rem" }}
+                                component="th"
+                                scope="row"
+                              >
+                                {row.dataName}
+                              </TableCell>
+                              <TableCell
+                                sx={{ fontSize: "1.5rem" }}
+                                align="center"
+                              >
+                                {row.description}
+                              </TableCell>
+                              <TableCell
+                                sx={{ fontSize: "1.5rem" }}
+                                align="center"
+                              >
+                                {new Date(row.timestamp).toLocaleDateString(
+                                  "th-TH",
+                                  {
+                                    day: "numeric",
+                                    month: "long",
+                                    year: "numeric",
+                                  }
+                                )}
+                              </TableCell>
+                              <TableCell
+                                sx={{ fontSize: "1.5rem" }}
+                                align="center"
+                              >
+                                <IconButton
+                                  onClick={(e) => {
+                                    handleClick(e, row.metadataId);
+                                  }}
+                                >
+                                  <PlagiarismIcon />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  ) : (
+                    <>
+                      <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                          <TableHead>
+                            <TableRow sx={{ backgroundColor: "#33333366" }}>
+                              <TableCell
+                                sx={{ fontSize: "1.75rem", color: "#fff" }}
+                              >
+                                ชื่อข้อมูล
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ fontSize: "1.75rem", color: "#fff" }}
+                              >
+                                รายละเอียดข้อมูล
+                              </TableCell>{" "}
+                              <TableCell
+                                align="center"
+                                sx={{ fontSize: "1.75rem", color: "#fff" }}
+                              >
+                                วันที่ที่อัปเดต
+                              </TableCell>
+                              <TableCell
+                                align="center"
+                                sx={{ fontSize: "1.75rem", color: "#fff" }}
+                              >
+                                <IconButton disabled>
+                                  <InfoIcon color="#FFF" />
+                                </IconButton>
+                              </TableCell>
+                            </TableRow>
+                          </TableHead>
+                        </Table>
+                      </TableContainer>
+                      <Box height={"50vh"} bgcolor="#FFF">
+                        <Grid container justifyContent={"center"} height="100%">
+                          <Grid item xs={12} alignSelf="center">
+                            <FmdBadTwoToneIcon sx={{fontSize: '8vh'}}/>
+                            <Typography fontSize={"2rem"}>
+                              ไม่มีข้อมูลที่ค้นหา
+                            </Typography>
+                          </Grid>
+                        </Grid>
+                      </Box>
+                    </>
+                  )}
                 </>
               ) : (
                 <Box
