@@ -48,11 +48,11 @@ const data = [
   },
   {
     key: 1,
-    name: "PM10",
+    name: "PM2.5",
   },
   {
     key: 2,
-    name: "PM2.5",
+    name: "PM10",
   },
 ];
 
@@ -261,13 +261,13 @@ function BasicTable({ metaData, dispatch, filesData, keyword, meta, select }) {
                       <TableHead>
                         <TableRow>
                           <TableCell sx={{ fontSize: "1.75rem" }}>
-                            dataName
+                            Data Name
                           </TableCell>
                           <TableCell
                             align="center"
                             sx={{ fontSize: "1.75rem" }}
                           >
-                            description
+                            Description
                           </TableCell>
                           <TableCell
                             align="center"

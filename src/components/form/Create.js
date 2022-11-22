@@ -165,6 +165,7 @@ const Create = ({
       })
       .then((r) => {
         console.log(r);
+        alert("upload success");
       })
       .catch((e) => {
         console.log(e);

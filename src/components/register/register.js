@@ -102,6 +102,7 @@ export default function Register({ open, handleClose }) {
             my: 2,
           }}
           fullWidth
+          type={"password"}
           label="Password"
           id="fullWidth"
           value={password}
