@@ -231,50 +231,75 @@ function BasicTable({ metaData, dispatch, filesData, keyword, meta, select }) {
             >
               {!swapSection ? (
                 <>
-                  <Typography
-                    sx={{
-                      fontSize: "2rem",
-                    }}
-                  >
-                    Select filter
-                  </Typography>
-                  <TextField
-                    id="outlined-select-currency"
-                    select
-                    value={data[meta].name}
-                    fullWidth
-                    // onChange={(e) => handleFilter(e)}
-                    // onChange={(e) => onChangeData(e)}
-                  >
-                    {data.map((option) => (
-                      <MenuItem
-                        key={option.key}
-                        value={option.name}
-                        onClick={(e) => handleFilter(option.key, option.name)}
+                  <Grid container mb={2}>
+                    <Grid item xs={2} alignSelf="center">
+                      <Typography
+                        sx={{
+                          fontSize: "2rem",
+                        }}
                       >
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                        select metaData
+                      </Typography>
+                    </Grid>
+                    <Grid id="select-meta" item xs={4}>
+                      <TextField
+                        id="outlined-select-currency"
+                        select
+                        value={data[meta].name}
+                        fullWidth
+                        sx={{ alignSelf: "center" }}
+                        // onChange={(e) => handleFilter(e)}
+                        // onChange={(e) => onChangeData(e)}
+                      >
+                        {data.map((option) => (
+                          <MenuItem
+                            key={option.key}
+                            value={option.name}
+                            onClick={(e) =>
+                              handleFilter(option.key, option.name)
+                            }
+                            sx={{ fontSize: "1.5rem" }}
+                          >
+                            {option.name}
+                          </MenuItem>
+                        ))}
+                      </TextField>
+                    </Grid>
+                    <Grid item xs={6} alignSelf={"center"}>
+                      <Typography fontSize={"2rem"} textAlign="end">
+                        {`ผลการค้นหาทั้งหมดที่ได้ "` +
+                          Object.values(metaData).length +
+                          `" ข้อมูล`}
+                      </Typography>
+                    </Grid>
+                  </Grid>
                   <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                       <TableHead>
-                        <TableRow>
-                          <TableCell sx={{ fontSize: "1.75rem" }}>
-                            Data Name
-                          </TableCell>
+                        <TableRow sx={{ backgroundColor: "#33333366" }}>
                           <TableCell
-                            align="center"
-                            sx={{ fontSize: "1.75rem" }}
+                            sx={{ fontSize: "1.75rem", color: "#fff" }}
                           >
-                            Description
+                            ชื่อข้อมูล
                           </TableCell>
                           <TableCell
                             align="center"
-                            sx={{ fontSize: "1.75rem" }}
+                            sx={{ fontSize: "1.75rem", color: "#fff" }}
+                          >
+                            รายละเอียดข้อมูล
+                          </TableCell>{" "}
+                          <TableCell
+                            align="center"
+                            sx={{ fontSize: "1.75rem", color: "#fff" }}
+                          >
+                            วันที่ที่อัปเดต
+                          </TableCell>
+                          <TableCell
+                            align="center"
+                            sx={{ fontSize: "1.75rem", color: "#fff" }}
                           >
                             <IconButton disabled>
-                              <InfoIcon />
+                              <InfoIcon color="#FFF"/>
                             </IconButton>
                           </TableCell>
                         </TableRow>
@@ -299,6 +324,19 @@ function BasicTable({ metaData, dispatch, filesData, keyword, meta, select }) {
                               align="center"
                             >
                               {row.description}
+                            </TableCell>
+                            <TableCell
+                              sx={{ fontSize: "1.5rem" }}
+                              align="center"
+                            >
+                              {new Date(row.timestamp).toLocaleDateString(
+                                "th-TH",
+                                {
+                                  day: "numeric",
+                                  month: "long",
+                                  year: "numeric",
+                                }
+                              )}
                             </TableCell>
                             <TableCell
                               sx={{ fontSize: "1.5rem" }}

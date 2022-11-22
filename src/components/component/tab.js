@@ -14,7 +14,7 @@ import { addSelectGroup } from "../../reducers/user/action";
 import { serachAPI } from "../../services/api-helper";
 import { useState } from "react";
 
-function BasicList({ dataSetCount, dispatch, selectSet }) {
+function BasicList({ dataSetCount, dispatch, selectSet, select }) {
   let [data, setData] = useState(0);
 
   const handleClick = (e) => {
@@ -36,6 +36,7 @@ function BasicList({ dataSetCount, dispatch, selectSet }) {
               onClick={() => {
                 handleClick(1);
               }}
+              selected={select === 1 ? true : false}
             >
               <ListItemIcon>
                 <InboxIcon />
@@ -50,6 +51,7 @@ function BasicList({ dataSetCount, dispatch, selectSet }) {
               onClick={() => {
                 handleClick(2);
               }}
+              selected={select === 2 ? true : false}
             >
               <ListItemIcon>
                 <DraftsIcon />
@@ -66,6 +68,7 @@ function BasicList({ dataSetCount, dispatch, selectSet }) {
               onClick={() => {
                 handleClick(3);
               }}
+              selected={select === 3 ? true : false}
             >
               <ListItemIcon>
                 <DraftsIcon />
@@ -80,6 +83,7 @@ function BasicList({ dataSetCount, dispatch, selectSet }) {
               onClick={() => {
                 handleClick(4);
               }}
+              selected={select === 4 ? true : false}
             >
               <ListItemIcon>
                 <DraftsIcon />
@@ -94,6 +98,7 @@ function BasicList({ dataSetCount, dispatch, selectSet }) {
               onClick={() => {
                 handleClick(5);
               }}
+              selected={select === 5 ? true : false}
             >
               <ListItemIcon>
                 <DraftsIcon />
