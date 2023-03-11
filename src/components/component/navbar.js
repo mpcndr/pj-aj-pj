@@ -23,6 +23,7 @@ import Login from "../login/login";
 import Register from "../register/register";
 import { Grid, Link } from "@mui/material";
 import { useNavigate } from "react-location";
+import {logoutView} from "../../services/api-helper"
 
 const drawerWidth = 240;
 
@@ -75,9 +76,26 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
+  const [isAgency, setIsAgency] = React.useState(false);
   const [openModalRegis, setOpenModalRegis] = React.useState(false);
   const jwt = JSON.parse(localStorage.getItem("jwt"));
   // const navigate = useNavigate();
+
+  async function CALLAPIlogout() {
+    if (true) {
+      let resAPI = await logoutView();
+      if (resAPI) {
+        if (resAPI.statusCode === 0) {
+          localStorage.clear("jwt");
+          checkPage("/");
+        } else {
+          alert("error?");
+        }
+      }
+    } else {
+        alert("Network error");
+    }
+  }
 
   function checkPage(path) {
     if (jwt) {
@@ -98,14 +116,17 @@ export default function PersistentDrawerLeft() {
 
   const handleOpenModal = () => {
     setOpenModal(true);
+   
   };
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  const handleOpenModalRegis = () => {
+  const handleOpenModalRegis = (agen) => {
     setOpenModalRegis(true);
+    setIsAgency(agen)
   };
+
   const handleCloseModalRegis = () => {
     setOpenModalRegis(false);
   };
@@ -143,34 +164,46 @@ export default function PersistentDrawerLeft() {
           {!jwt ? (
             <Grid container justifyContent={"end"}>
               <Button
-                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
                 color="inherit"
                 onClick={handleOpenModal}
               >
                 เข้าสู่ระบบ
               </Button>
+              
               <Button
-                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
                 color="inherit"
-                onClick={handleOpenModalRegis}
+                onClick={() => handleOpenModalRegis(true)}
               >
-                ลงทะเบียน
+                ลงทะเบียนสำหรับหน่วยงาน
               </Button>
+              <Button
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
+                color="inherit"
+                onClick={() => handleOpenModalRegis(false)}
+              >
+                ลงทะเบียนสำหรับผู้ใช้งาน
+              </Button>
+              <Button 
+              sx={{ fontSize: "1.2rem", mx: 1.2 }}
+              color="inherit" href="/creat-form">
+                เพิ่มข้อมูล
+            </Button>
+
             </Grid>
           ) : (
             <Grid container justifyContent={"end"}>
               <Button
                 color="inherit"
                 sx={{ fontSize: "1.5rem", mx: 1.5 }}
-                onClick={() => {
-                  localStorage.clear("jwt");
-                  checkPage("/");
-                }}
+                onClick={CALLAPIlogout}
               >
                 ออกจากระบบ
               </Button>
-              <Button
-                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+              
+              // <Button
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
                 color="inherit"
                 onClick={() => checkPage("creat-form")}
               >
@@ -238,7 +271,7 @@ export default function PersistentDrawerLeft() {
         </List>
       </Drawer>
       <Login open={openModal} handleClose={handleCloseModal} />
-      <Register open={openModalRegis} handleClose={handleCloseModalRegis} />
+      <Register open={openModalRegis} handleClose={handleCloseModalRegis} isAgency={isAgency}/>
     </Box>
   );
 }

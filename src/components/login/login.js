@@ -4,7 +4,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { login } from "../../services/api-helper";
+import { loginAgencyUploadView } from "../../services/api-helper";
 import { useNavigate } from "react-router-dom";
 
 const style = {
@@ -26,7 +26,7 @@ export default function Login({ open, handleClose }) {
 
   async function CallAPILogin(email, psw) {
     if (true) {
-      let resAPI = await login(email, psw);
+      let resAPI = await loginAgencyUploadView(email, psw);
       console.log(resAPI);
 
       if (resAPI) {

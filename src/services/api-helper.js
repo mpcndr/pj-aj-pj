@@ -1,8 +1,9 @@
 import axios from "axios";
 import fileDownload from "js-file-download";
+//188.166.220.33:8000
 
 async function query(urlComponent, inputQuery, token = "") {
-  var urlapi = "http://146.190.81.72:8000/api";
+  var urlapi = "http://188.166.220.33:8000/api";
 
   const headers = {
     // Authorization: `Bearer ${tokenLocal}`,
@@ -50,6 +51,7 @@ export async function login(email, password) {
     return false;
   }
 
+  
   if (Object.keys(response).length === 0) return false;
   if (!response.data && response.error) return response;
 
@@ -58,9 +60,111 @@ export async function login(email, password) {
   return response;
 }
 
-export async function logout() {
+
+export async function registerAgencyUploadView(email, password, agencyname, usernameagency) {
   let response;
-  let result = await query(`/login`);
+  let req = {
+    email: email,
+    password: password,
+    agencyName:agencyname,
+    userNameAgency:usernameagency,
+    isAgency:true,
+
+  };
+  console.log("req registerAgency ", req);
+  let result = await query(`/registerAgencyUploadView`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: result.data,
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+
+  console.log("===> ", response);
+
+  return response;
+}
+
+export async function registerUserView(email, password, firstnameUserRequest,lastnameUserRequest,agencyNameRequest ) {
+  let response;
+  let req = {
+    email: email,
+    password: password,
+    firstnameUserRequest: firstnameUserRequest,
+    lastnameUserRequest: lastnameUserRequest,
+    agencyNameRequest: agencyNameRequest,
+    isAgency:false,
+
+  };
+  console.log("req registerUser ", req);
+  let result = await query(`/registerUserView`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: result.data,
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+  console.log("===> ", response);
+  return response;
+}
+
+export async function loginAgencyUploadView(email, password ) {
+  let response;
+  let req = {
+    email: email,
+    password: password,
+  };
+  console.log("req loginAgency ", req);
+  let result = await query(`/loginUserView`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: result.data,
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+  console.log("===> ", response);
+  return response;
+}
+
+export async function logoutView() {
+  let response;
+  let result = await query(`/logoutView`);
 
   if (result) {
     if (result.statusCode === 0) {
@@ -87,6 +191,131 @@ export async function logout() {
 
   return response;
 }
+
+export async function uploadFileView(dataSetGroupId,fileName,provinceId,dataName,description, files ) {
+  let response;
+  let req = {
+    dataSetGroupId: dataSetGroupId,
+    fileName: fileName,
+    provinceId: provinceId,
+    dataName: dataName,
+    description: description,
+    files: files
+  };
+  console.log("req loginAgency ", req);
+  let result = await query(`/uploadFileView`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: [],
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+  console.log("===> ", response);
+  return response;
+}
+
+export async function readFileView(fileName ) {
+  let response;
+  let req = {   
+    fileName: fileName,
+  };
+  console.log("req readFile ", req);
+  let result = await query(`/readFileView`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: result.data,
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+  console.log("===> ", response);
+  return response;
+}
+
+export async function mapMetaDataView(mapFields ) {
+  let response;
+  let req = {   
+    mapFields: mapFields,
+  };
+  console.log("req mapMetaData ", req);
+  let result = await query(`/mapMetaData`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: result.data,
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+  console.log("===> ", response);
+  return response;
+}
+
+export async function searchDataView(dataSetGroupId, keySearch, mataDataField ) {
+  let response;
+  let req = {   
+    dataSetGroupId: dataSetGroupId,
+    keySearch: keySearch,
+    mataDataField:  mataDataField,
+  };
+  console.log("req searchData", req);
+  let result = await query(`/searchDataView`, req);
+
+  if (result) {
+    if (result.statusCode === 0) {
+      response = {
+        statusCode: result.statusCode,
+        data: result.data,
+      };
+    } else {
+      response = {
+        statusCode: result.statusCode,
+        error: result.errorMsg,
+      };
+    }
+  } else {
+    return false;
+  }
+  if (Object.keys(response).length === 0) return false;
+  if (!response.data && response.error) return response;
+  console.log("===> ", response);
+  return response;
+}
+
+
 
 export async function registerAPI(
   firstname,

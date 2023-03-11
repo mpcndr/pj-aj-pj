@@ -39,7 +39,7 @@ function BasicList({ dataSetCount, dispatch, selectSet, select }) {
               selected={select === 1 ? true : false}
             >
               <ListItemIcon>
-                <InboxIcon />
+                <DraftsIcon />
               </ListItemIcon>
               <ListItemText
                 primary={"การคมนาคมขนส่ง (" + dataSetCount.logistic + ")"}

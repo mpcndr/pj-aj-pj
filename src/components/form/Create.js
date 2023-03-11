@@ -37,15 +37,15 @@ const Create = ({
     setServiceList(list);
   };
 
-  useEffect(() => {
-    const jwt = JSON.parse(localStorage.getItem("jwt"));
-    if (jwt) {
-      return;
-    } else {
-      alert("กรุณาเข้าสู่ระบบก่อน");
-      window.location.href = "/";
-    }
-  }, []);
+  //useEffect(() => {
+  //  const jwt = JSON.parse(localStorage.getItem("jwt"));
+  //  if (jwt) {
+  //  return;
+  // } else {
+  //   alert("กรุณาเข้าสู่ระบบก่อน");
+  //    window.location.href = "/";
+  //  }
+  //}, []);
 
   const addDataField = () => {
     setNameField([...nameField, nameField]);
