@@ -21,6 +21,9 @@ import MailIcon from "@mui/icons-material/Mail";
 import Button from "@mui/material/Button";
 import Login from "../login/login";
 import Register from "../register/register";
+import { Grid, Link } from "@mui/material";
+import { useNavigate } from "react-location";
+import {logoutView} from "../../services/api-helper"
 
 const drawerWidth = 240;
 
@@ -73,8 +76,35 @@ export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const [openModal, setOpenModal] = React.useState(false);
+  const [isAgency, setIsAgency] = React.useState(false);
   const [openModalRegis, setOpenModalRegis] = React.useState(false);
   const jwt = JSON.parse(localStorage.getItem("jwt"));
+  // const navigate = useNavigate();
+
+  async function CALLAPIlogout() {
+    if (true) {
+      let resAPI = await logoutView();
+      if (resAPI) {
+        if (resAPI.statusCode === 0) {
+          localStorage.clear("jwt");
+          checkPage("/");
+        } else {
+          alert("error?");
+        }
+      }
+    } else {
+        alert("Network error");
+    }
+  }
+
+  function checkPage(path) {
+    if (jwt) {
+      window.location.href = path;
+    } else {
+      // alert("กรุณา login ก่อน");
+      handleOpenModal();
+    }
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -86,16 +116,24 @@ export default function PersistentDrawerLeft() {
 
   const handleOpenModal = () => {
     setOpenModal(true);
+   
   };
   const handleCloseModal = () => {
     setOpenModal(false);
   };
 
-  const handleOpenModalRegis = () => {
+  const handleOpenModalRegis = (agen) => {
     setOpenModalRegis(true);
+    setIsAgency(agen)
   };
+
   const handleCloseModalRegis = () => {
     setOpenModalRegis(false);
+  };
+
+  const handleClick = () => {
+    console.log("เข้า");
+    window.location.href = "/";
   };
 
   return (
@@ -103,57 +141,84 @@ export default function PersistentDrawerLeft() {
       <CssBaseline />
       <AppBar position="static" open={open}>
         <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{ mr: 2, ...(open && { display: "none" }) }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant="h6"
+          <Grid container justifyContent={"start"}>
+            <Button onClick={() => handleClick()}>
+              <Typography fontSize={"2.7rem"} color="#FFF">
+                Air Pollution Data Center
+              </Typography>
+            </Button>
+          </Grid>
+
+          {/* <Typography
+            variant="h4"
+            fontSize={"3rem"}
             noWrap
-            component="div"
+            component="span"
             sx={{ flexGrow: 1 }}
-            component="a"
-            href="/"
+            onClick={() => {
+              navigator("/");
+            }}
           >
             Air Pollution Data Center
-          </Typography>
+          </Typography> */}
           {!jwt ? (
-            <>
-              <Button color="inherit" onClick={handleOpenModal}>
+            <Grid container justifyContent={"end"}>
+              <Button
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
+                color="inherit"
+                onClick={handleOpenModal}
+              >
                 เข้าสู่ระบบ
               </Button>
-              <Button color="inherit" onClick={handleOpenModalRegis}>
-                ลงทะเบียน
+              
+              <Button
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
+                color="inherit"
+                onClick={() => handleOpenModalRegis(true)}
+              >
+                ลงทะเบียนสำหรับหน่วยงาน
               </Button>
-            </>
+              <Button
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
+                color="inherit"
+                onClick={() => handleOpenModalRegis(false)}
+              >
+                ลงทะเบียนสำหรับผู้ใช้งาน
+              </Button>
+              <Button 
+              sx={{ fontSize: "1.2rem", mx: 1.2 }}
+              color="inherit" href="/creat-form">
+                เพิ่มข้อมูล
+            </Button>
+
+            </Grid>
           ) : (
-            <>
+            <Grid container justifyContent={"end"}>
               <Button
                 color="inherit"
-                onClick={() => {
-                  localStorage.clear("jwt");
-                  window.location.reload();
-                }}
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                onClick={CALLAPIlogout}
               >
                 ออกจากระบบ
               </Button>
-            </>
+              
+              // <Button
+                sx={{ fontSize: "1.2rem", mx: 1.2 }}
+                color="inherit"
+                onClick={() => checkPage("creat-form")}
+              >
+                เพิ่มข้อมูล
+              </Button>
+
+              {/* <Button
+                sx={{ fontSize: "1.5rem", mx: 1.5 }}
+                color="inherit"
+                onClick={() => checkPage("update-form")}
+              >
+                อัปเดตข้อมูล
+              </Button> */}
+            </Grid>
           )}
-
-          <Button color="inherit" href="/data-form">
-            เพิ่มข้อมูลสำหรับหน่วยงาน
-          </Button>
-
-          <Button color="inherit" href="/add-form">
-            เพิ่มฟิล์ด
-          </Button>
-
-
         </Toolbar>
       </AppBar>
       <Drawer
@@ -206,7 +271,7 @@ export default function PersistentDrawerLeft() {
         </List>
       </Drawer>
       <Login open={openModal} handleClose={handleCloseModal} />
-      <Register open={openModalRegis} handleClose={handleCloseModalRegis} />
+      <Register open={openModalRegis} handleClose={handleCloseModalRegis} isAgency={isAgency}/>
     </Box>
   );
 }

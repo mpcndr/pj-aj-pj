@@ -1,0 +1,2 @@
+export const ADD_DATALIST = "ADD_DATALIST";
+export const CLEAR_DATALIST = "CLEAR_DATALIST";

@@ -32,6 +32,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -72,3 +73,31 @@ label {
   font-weight: 600;
   color: rgb(34, 34, 34);
 }
+
+/* .css-1ptx2yq-MuiInputBase-root-MuiInput-root {
+  font-size: 2rem;
+  height: 50px;
+} */
+.css-10hburv-MuiTypography-root {
+  font-size: 1.75rem !important;
+}
+
+#icon-files .css-i4bv87-MuiSvgIcon-root {
+  font-size: 4rem !important;
+}
+
+#files-result .css-i4bv87-MuiSvgIcon-root {
+  font-size: 6rem !important;
+  color: cadetblue;
+  margin-right: 1rem;
+}
+
+#outlined-select-currency {
+  font-size: 1.5rem;
+  background-color: aliceblue;
+}
+
+/* .css-wb57ya-MuiFormControl-root-MuiTextField-root {
+  margin-bottom: 2rem !important;
+  width: 30% !important;
+} */
